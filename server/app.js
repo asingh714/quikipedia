@@ -28,18 +28,25 @@ const fetchWikiExtract = async (searchTerm) => {
     const data = await response.json();
     const page = Object.values(data.query.pages)[0];
     const extract = page.extract;
-
     return extract;
   } catch (error) {
     return error;
   }
 };
 
+const formatSearchTerm = (searchTerm) => {
+  return searchTerm
+    .trim()
+    .split(/\s+/)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join("_");
+};
+
 app.get("/summarize", async (req, res) => {
   const { searchTerm, mode } = req.body;
-
+  const formattedSearchTerm = formatSearchTerm(searchTerm);
   try {
-    const extract = await fetchWikiExtract(searchTerm);
+    const extract = await fetchWikiExtract(formattedSearchTerm);
 
     let messages = [];
     if (mode === "fun") {
