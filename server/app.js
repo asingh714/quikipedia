@@ -36,22 +36,37 @@ const fetchWikiExtract = async (searchTerm) => {
 };
 
 app.get("/summarize", async (req, res) => {
-  const { searchTerm } = req.body;
+  const { searchTerm, mode } = req.body;
 
   try {
     const extract = await fetchWikiExtract(searchTerm);
 
-    const messages = [
-      {
-        role: "system",
-        content:
-          "Please provide a concise summary of the following text, highlighting the key points and main themes. The summary should not exceed 500 characters. Feel free to include any relevant additional information you might be aware of that is not mentioned in the text",
-      },
-      {
-        role: "user",
-        content: `${extract}`,
-      },
-    ];
+    let messages = [];
+    if (mode === "fun") {
+      messages = [
+        {
+          role: "system",
+          content:
+            "Alright, let's make learning fun! Can you summarize the following text in a way that's easy-going, a bit silly, and still informative? Keep it under 500 characters and feel free to add a dash of humor or some quirky facts you might know!",
+        },
+        {
+          role: "user",
+          content: `${extract}`,
+        },
+      ];
+    } else {
+      messages = [
+        {
+          role: "system",
+          content:
+            "Please provide a concise summary of the following text, highlighting the key points and main themes. The summary should not exceed 500 characters. Feel free to include any relevant additional information you might be aware of that is not mentioned in the text",
+        },
+        {
+          role: "user",
+          content: `${extract}`,
+        },
+      ];
+    }
 
     const completion = await openai.chat.completions.create({
       model: "gpt-4",
