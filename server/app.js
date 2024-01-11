@@ -20,15 +20,17 @@ app.get("/", (req, res) => {
 // https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro&explaintext&titles=Jordan_Belfort
 // https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro&explaintext&titles=Google
 
+// `https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro&explaintext&titles=${searchTerm}`
 const fetchWikiExtract = async (searchTerm) => {
   try {
     const response = await fetch(
-      `https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro&explaintext&titles=${searchTerm}`
+      `https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts|pageimages&exintro&explaintext&titles=${searchTerm}&pithumbsize=500`
     );
     const data = await response.json();
     const page = Object.values(data.query.pages)[0];
     const extract = page.extract;
-    return extract;
+    const imageUrl = page.thumbnail ? page.thumbnail.source : null;
+    return { extract, imageUrl };
   } catch (error) {
     return error;
   }
@@ -46,7 +48,7 @@ app.get("/summarize", async (req, res) => {
   const { searchTerm, mode } = req.body;
   const formattedSearchTerm = formatSearchTerm(searchTerm);
   try {
-    const extract = await fetchWikiExtract(formattedSearchTerm);
+    const { extract, imageUrl } = await fetchWikiExtract(formattedSearchTerm);
 
     let messages = [];
     if (mode === "fun") {
@@ -79,7 +81,9 @@ app.get("/summarize", async (req, res) => {
       model: "gpt-4",
       messages: messages,
     });
-    res.status(200).json(completion.choices[0].message.content);
+    res
+      .status(200)
+      .json({ summary: completion.choices[0].message.content, imageUrl });
   } catch (error) {
     res.status(500).send("Error generating Wiki Summary");
   }
