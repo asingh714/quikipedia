@@ -35,6 +35,18 @@ const fetchWikiSearchResults = async (searchTerm) => {
   }
 };
 
+const fetchSuggestions = async (searchTerm) => {
+  const url = `https://en.wikipedia.org/w/api.php?action=opensearch&search=${searchTerm}&limit=10&namespace=0&format=json&origin=*`;
+
+  try {
+    const response = await fetch(url);
+    const suggestions = await response.json();
+    return suggestions[1];
+  } catch (error) {
+    console.error("Error fetching search suggestions:", error);
+  }
+};
+
 const fetchWikiExtract = async (searchTerm) => {
   try {
     const response = await fetch(
@@ -121,6 +133,16 @@ app.get("/allResults", async (req, res) => {
   try {
     const searchResults = await fetchWikiSearchResults(searchTerm);
     res.status(200).json({ searchResults });
+  } catch (error) {
+    res.status(500).send("Error generating Wiki Summary");
+  }
+});
+
+app.get("/allSuggestions", async (req, res) => {
+  const { searchTerm } = req.body;
+  try {
+    const suggestions = await fetchSuggestions(searchTerm);
+    res.status(200).json({ suggestions });
   } catch (error) {
     res.status(500).send("Error generating Wiki Summary");
   }
