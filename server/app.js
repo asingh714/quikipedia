@@ -66,6 +66,37 @@ const fetchWikiExtract = async (searchTerm) => {
   }
 };
 
+const fetchRandomWikiPage = async () => {
+  try {
+    // Fetch a random page
+    const randomPageResponse = await fetch(
+      "https://en.wikipedia.org/w/api.php?action=query&format=json&list=random&rnnamespace=0&rnlimit=1&origin=*"
+    );
+    const randomData = await randomPageResponse.json();
+    const randomPageTitle = randomData.query.random[0].title;
+
+    const extractResponse = await fetch(
+      `https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts|pageimages&exintro&explaintext&titles=${encodeURIComponent(
+        randomPageTitle
+      )}&pithumbsize=500&origin=*`
+    );
+    const extractData = await extractResponse.json();
+    const page = Object.values(extractData.query.pages)[0];
+
+    if (page.missing !== undefined) {
+      return { extract: null, imageUrl: null, isMissing: true };
+    }
+
+    const extract = page.extract;
+    const imageUrl = page.thumbnail ? page.thumbnail.source : null;
+
+    return { extract, imageUrl, isMissing: false };
+  } catch (error) {
+    console.error(error);
+    return { error: error.message };
+  }
+};
+
 const formatSearchTerm = (searchTerm) => {
   return searchTerm
     .trim()
@@ -75,12 +106,17 @@ const formatSearchTerm = (searchTerm) => {
 };
 
 app.get("/summarize", async (req, res) => {
-  const { searchTerm, mode } = req.body;
-  const formattedSearchTerm = formatSearchTerm(searchTerm);
+  const { searchTerm, mode, isRandom } = req.body;
+  let wikiResponse;
   try {
-    const { extract, imageUrl, isMissing } = await fetchWikiExtract(
-      formattedSearchTerm
-    );
+    if (isRandom) {
+      wikiResponse = await fetchRandomWikiPage();
+    } else {
+      const formattedSearchTerm = formatSearchTerm(searchTerm);
+      wikiResponse = await fetchWikiExtract(formattedSearchTerm);
+    }
+
+    const { extract, imageUrl, isMissing } = wikiResponse;
     let messages = [];
 
     if (isMissing) {
@@ -147,6 +183,20 @@ app.get("/allSuggestions", async (req, res) => {
     res.status(500).send("Error generating Wiki Summary");
   }
 });
+
+// Endpoint to get a random Wikipedia summary
+// app.get("/randomSummary", async (req, res) => {
+//   try {
+//     const randomPage = await fetchRandomWikiPage();
+//     if (randomPage.error) {
+//       res.status(500).send("Error fetching a random Wikipedia summary");
+//     } else {
+//       res.status(200).json(randomPage);
+//     }
+//   } catch (error) {
+//     res.status(500).send("Server Error");
+//   }
+// });
 
 const port = process.env.PORT || 5000;
 
