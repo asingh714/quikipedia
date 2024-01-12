@@ -28,9 +28,13 @@ const fetchWikiExtract = async (searchTerm) => {
     );
     const data = await response.json();
     const page = Object.values(data.query.pages)[0];
+    if (page.missing !== undefined) {
+      return { extract: null, imageUrl: null, isMissing: true };
+    }
+
     const extract = page.extract;
     const imageUrl = page.thumbnail ? page.thumbnail.source : null;
-    return { extract, imageUrl };
+    return { extract, imageUrl, isMissing: false };
   } catch (error) {
     return error;
   }
@@ -48,15 +52,24 @@ app.get("/summarize", async (req, res) => {
   const { searchTerm, mode } = req.body;
   const formattedSearchTerm = formatSearchTerm(searchTerm);
   try {
-    const { extract, imageUrl } = await fetchWikiExtract(formattedSearchTerm);
-
+    const { extract, imageUrl, isMissing } = await fetchWikiExtract(
+      formattedSearchTerm
+    );
     let messages = [];
-    if (mode === "fun") {
+
+    if (isMissing) {
+      const researchPrompt =
+        mode === "fun"
+          ? ` Alright, let's make learning fun! Can you summarize the following text in a way that's easy-going, a bit silly, and still informative? Keep it under 350 characters and feel free to add a dash of humor or some quirky facts you might know!  Can you humorously research and provide a fun summary about "${searchTerm}"? Keep it short and snazzy, under 350 characters please! 🌟`
+          : `It seems there isn't a Wikipedia page on this topic. Can you research and provide a summary about "${searchTerm}" in a way that's easy-going, a bit silly, and still informative? Keep it under 350 characters.`;
+
+      messages = [{ role: "system", content: researchPrompt }];
+    } else if (mode === "fun") {
       messages = [
         {
           role: "system",
           content:
-            "Alright, let's make learning fun! Can you summarize the following text in a way that's easy-going, a bit silly, and still informative? Keep it under 500 characters and feel free to add a dash of humor or some quirky facts you might know!",
+            "Alright, let's make learning fun! Can you summarize the following text in a way that's easy-going, a bit silly, and still informative? Keep it under 350 characters and feel free to add a dash of humor or some quirky facts you might know!",
         },
         {
           role: "user",
@@ -68,7 +81,7 @@ app.get("/summarize", async (req, res) => {
         {
           role: "system",
           content:
-            "Please provide a concise summary of the following text, highlighting the key points and main themes. The summary should not exceed 500 characters. Feel free to include any relevant additional information you might be aware of that is not mentioned in the text",
+            "Please provide a concise summary of the following text, highlighting the key points and main themes. The summary should not exceed 350 characters. Feel free to include any relevant additional information you might be aware of that is not mentioned in the text",
         },
         {
           role: "user",
