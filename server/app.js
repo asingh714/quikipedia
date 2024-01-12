@@ -21,6 +21,20 @@ app.get("/", (req, res) => {
 // https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro&explaintext&titles=Google
 
 // `https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro&explaintext&titles=${searchTerm}`
+
+const fetchWikiSearchResults = async (searchTerm) => {
+  try {
+    const response = await fetch(
+      `https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${searchTerm}&gsrlimit=20&prop=pageimages|extracts&exchars=20&exintro&explaintext&exlimit=max&format=json&origin=*`
+    );
+    const data = await response.json();
+    return data.query ? Object.values(data.query.pages) : [];
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
 const fetchWikiExtract = async (searchTerm) => {
   try {
     const response = await fetch(
@@ -97,6 +111,16 @@ app.get("/summarize", async (req, res) => {
     res
       .status(200)
       .json({ summary: completion.choices[0].message.content, imageUrl });
+  } catch (error) {
+    res.status(500).send("Error generating Wiki Summary");
+  }
+});
+
+app.get("/allResults", async (req, res) => {
+  const { searchTerm, mode } = req.body;
+  try {
+    const searchResults = await fetchWikiSearchResults(searchTerm);
+    res.status(200).json({ searchResults });
   } catch (error) {
     res.status(500).send("Error generating Wiki Summary");
   }
