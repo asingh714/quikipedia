@@ -1,27 +1,134 @@
-main {
+.main-container {
   height: 100vh;
   width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.bg-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inset: 0;
+  overflow: hidden;
+}
+
+.bg-shape {
+  opacity: 0.2;
+  filter: blur(90px);
+}
+
+.bg-shape1 {
+  width: 40rem;
+  height: 40rem;
+  border-radius: 50%;
+  position: absolute;
+  animation: float1 20s infinite ease-in-out;
+  background-color: #7e22ce; /* PURPLE 700 */
+  left: 10%;
+  top: 10%;
+}
+
+.bg-shape2 {
+  width: 30rem;
+  height: 30rem;
+  border-radius: 50%; /* Creates a perfect circle */
+  position: absolute;
+  animation: float2 18s infinite ease-in-out;
+  background-color: #4338ca; /* INDIGO 700 */
+  left: 50%;
+  top: 50%;
+}
+
+.bg-shape3 {
+  width: 50rem;
+  height: 50rem;
+  border-radius: 50%; /* Creates a perfect circle */
+  position: absolute;
+  animation: float3 22s infinite ease-in-out;
+  background-color: #a21caf; /* FUCHSIA 700 */
+  right: 10%;
+  bottom: 10%;
 }
 
 header {
   text-align: center;
+  z-index: 10;
 }
 
 h1 {
-  font-size: 5rem;
+  font-size: 6.4rem;
+  font-weight: 500;
 }
 
 p {
-  font-size: 3.2rem;
+  font-size: 2.4rem;
 }
 
 form {
+  z-index: 10;
 }
 
 .main-input {
-  
+  width: 40rem;
+  border-radius: 1.5rem;
+  border: 0.1rem solid #ccc;
+  padding: 0.5rem;
+}
+
+@keyframes float1 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(10vw, 10vh) scale(1.05);
+  }
+  50% {
+    transform: translate(-10vw, -10vh) scale(1);
+  }
+  75% {
+    transform: translate(10vw, -10vh) scale(0.95);
+  }
+}
+
+@keyframes float2 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(-10vw, 10vh) scale(0.95);
+  }
+  50% {
+    transform: translate(10vw, 10vh) scale(1);
+  }
+  75% {
+    transform: translate(-10vw, -10vh) scale(1.05);
+  }
+}
+
+@keyframes float3 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(-10vw, -10vh) scale(1.05);
+  }
+  50% {
+    transform: translate(10vw, -10vh) scale(1);
+  }
+  75% {
+    transform: translate(-10vw, 10vh) scale(0.95);
+  }
 }
