@@ -1,5 +1,5 @@
 import "./Home.css";
-import Search from "../../assets/search.svg";
+import SearchIcon from "../../assets/search.svg";
 
 const Home = () => {
   return (
@@ -11,11 +11,13 @@ const Home = () => {
       </div>
       <header>
         <h1>Quikipedia</h1>
-        <p>Wikipedia summaries for those in a hurry</p>
+        <p>Quick Wikipedia summaries for those in a hurry</p>
       </header>
       <form>
-        <input type="text" className="main-input" />
-        <img src={Search} alt="" />
+        <div className="search-container">
+          <input type="text" className="main-input" placeholder="" />
+          <img src={SearchIcon} alt="Search" className="search-icon" />
+        </div>
         <div>
           <label htmlFor="funModeSwitch" className="switch-label">
             Fun Mode
