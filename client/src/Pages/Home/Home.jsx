@@ -17,19 +17,15 @@ const Home = () => {
         <div className="search-container">
           <input type="text" className="main-input" placeholder="" />
           <img src={SearchIcon} alt="Search" className="search-icon" />
-        </div>
-        <div>
-          <label htmlFor="funModeSwitch" className="switch-label">
-            Fun Mode
+          <label className="switch">
+            <input type="checkbox" />
+            <span className="slider round"></span>
           </label>
-          <div className="switch">
-            <input type="checkbox" id="funModeSwitch" />
-            <span className="slider"></span>
-          </div>
+          <span className="fun-mode-label">Fun Mode</span>
         </div>
         <div className="button-container">
-          <button>Search</button>
-          <button>Something random 🤪</button>
+          <button className="search-btn">Search</button>
+          <button className="random-btn">Something random 🤪</button>
         </div>
       </form>
     </main>
