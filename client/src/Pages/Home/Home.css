@@ -177,6 +177,38 @@ input:checked + .slider:before {
   margin-top: 5rem;
 }
 
+.button-container button {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 2rem;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: 1rem;
+}
+
+.search-btn {
+  background-color: #7e22ce;
+  color: white;
+}
+
+.search-btn:hover {
+  background-color: #a21caf;
+}
+
+.random-btn {
+  background-color: #4338ca;
+  color: white;
+}
+
+.random-btn:hover {
+  background-color: #6b4fce;
+}
+
+.button-container button:last-child {
+  margin-right: 0;
+}
+
 @keyframes float1 {
   0%,
   100% {
