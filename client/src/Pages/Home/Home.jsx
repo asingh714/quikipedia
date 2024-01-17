@@ -1,7 +1,34 @@
-import "./Home.css";
+import { useAppContext } from "../../utils/AppContext";
+
 import SearchIcon from "../../assets/search.svg";
+import "./Home.css";
 
 const Home = () => {
+  const { searchTerm, setSearchTerm, mode, setMode, isRandom, setIsRandom } =
+    useAppContext();
+
+  const handleInputChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const toggleMode = () => {
+    setMode((prevMode) => (prevMode === "normal" ? "fun" : "normal"));
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setIsRandom(false);
+    console.log(`Searching for: ${searchTerm} in ${mode} mode.`);
+  };
+
+  const handleRandomSearch = (e) => {
+    e.preventDefault();
+    setIsRandom(true);
+    console.log(
+      `Fetching something random in ${mode} mode. And isRandom is setTo ${isRandom}`
+    );
+  };
+
   return (
     <main className="main-container">
       <div className="bg-container">
@@ -15,17 +42,31 @@ const Home = () => {
       </header>
       <form>
         <div className="search-container">
-          <input type="text" className="main-input" placeholder="" />
+          <input
+            type="text"
+            className="main-input"
+            value={searchTerm}
+            onChange={handleInputChange}
+          />
+
           <img src={SearchIcon} alt="Search" className="search-icon" />
           <label className="switch">
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              onChange={toggleMode}
+              checked={mode === "fun"}
+            />
             <span className="slider round"></span>
           </label>
           <span className="fun-mode-label">Fun Mode</span>
         </div>
         <div className="button-container">
-          <button className="search-btn">Search</button>
-          <button className="random-btn">Something random 🤪</button>
+          <button className="search-btn" onClick={handleSearch}>
+            Search
+          </button>
+          <button className="random-btn" onClick={handleRandomSearch}>
+            Something random 🤪
+          </button>
         </div>
       </form>
     </main>
