@@ -75,7 +75,19 @@ const Home = () => {
             value={searchTerm}
             onChange={handleInputChange}
           />
-
+          {suggestions.length > 0 && (
+            <ul className="suggestions-list">
+              {suggestions.map((suggestion, index) => (
+                <li
+                  key={index}
+                  className="suggestion-item"
+                  // onClick={() => selectSuggestion(suggestion)}
+                >
+                  {suggestion}
+                </li>
+              ))}
+            </ul>
+          )}
           <img src={SearchIcon} alt="Search" className="search-icon" />
           <label className="switch">
             <input
@@ -87,6 +99,7 @@ const Home = () => {
           </label>
           <span className="fun-mode-label">Fun Mode</span>
         </div>
+
         <div className="button-container">
           <button className="search-btn" onClick={handleSearch}>
             Search
@@ -96,15 +109,6 @@ const Home = () => {
           </button>
         </div>
       </form>
-      {suggestions.length > 0 && (
-        <ul className="suggestions-list">
-          {suggestions.map((suggestion, index) => (
-            <li key={index} className="suggestion-item">
-              {suggestion}
-            </li>
-          ))}
-        </ul>
-      )}
     </main>
   );
 };

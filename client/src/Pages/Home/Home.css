@@ -1,12 +1,11 @@
 .main-container {
-  height: 100vh;
-  width: 100vw;
+  min-height: 100vh;
+  max-width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  padding-top: 10%;
   position: relative;
-  overflow: hidden;
 }
 
 .bg-container {
@@ -19,7 +18,6 @@
   align-items: center;
   justify-content: center;
   inset: 0;
-  overflow: hidden;
 }
 
 .bg-shape {
@@ -91,12 +89,40 @@ form {
   margin-top: 2rem;
 }
 
+.suggestions-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 75%;
+  border: 1px solid #dfe1e5;
+  border-top: none;
+  background-color: white;
+  list-style: none;
+  box-shadow: 0 4px 6px rgba(32, 33, 36, 0.28);
+  z-index: 1000;
+  border-radius: 2.4rem;
+  overflow: hidden;
+}
+
+.suggestion-item {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.suggestion-item:not(:last-child) {
+  border-bottom: 1px solid #dfe1e5;
+}
+
+.suggestion-item:hover {
+  background-color: #eee;
+}
+
 .main-input {
   width: 75%;
   padding: 10px 20px 10px 40px;
   font-size: 1.6rem;
   border: 1px solid #dfe1e5;
-  border-radius: 24px;
+  border-radius: 2.4rem;
   outline: none;
   -webkit-appearance: none;
   transition: box-shadow 0.3s ease;
