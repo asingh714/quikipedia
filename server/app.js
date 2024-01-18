@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
 import cors from "cors";
+import morgan from "morgan";
 import OpenAI from "openai";
 import {
   fetchWikiSearchResults,
@@ -12,30 +13,16 @@ import {
 } from "./utils.js";
 
 const app = express();
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(morgan("tiny"));
 app.use(express.json());
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=google_search&gsrlimit=20&prop=pageimages|extracts&exchars=20&exintro&explaintext&exlimit=max&format=json&origin=*
-// https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro&explaintext&pageids=12431
-// https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro&explaintext&titles=${searchTerm}
-// https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro&explaintext&titles=Jordan_Belfort
-// https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro&explaintext&titles=Google
-
-// `https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro&explaintext&titles=${searchTerm}`
-
-/* 
-TODO: 
-
-1. test all routes and finalize 
-2. design homepage 
-3. design more info page 
-*/
-
 app.get("/summarize", async (req, res) => {
-  const { searchTerm, mode, isRandom } = req.body;
+  const { searchTerm, mode, isRandom } = req.query;
   let wikiResponse;
   try {
     if (isRandom) {
@@ -94,7 +81,8 @@ app.get("/summarize", async (req, res) => {
 });
 
 app.get("/allResults", async (req, res) => {
-  const { searchTerm } = req.body;
+  const { searchTerm } = req.query;
+  console.log(searchTerm);
   try {
     const searchResults = await fetchWikiSearchResults(searchTerm);
     res.status(200).json({ searchResults });
@@ -104,7 +92,8 @@ app.get("/allResults", async (req, res) => {
 });
 
 app.get("/allSuggestions", async (req, res) => {
-  const { searchTerm } = req.body;
+  res.set("Cache-Control", "no-store");
+  const { searchTerm } = req.query;
   try {
     const suggestions = await fetchSuggestions(searchTerm);
     res.status(200).json({ suggestions });

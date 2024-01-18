@@ -1,11 +1,38 @@
-import { useAppContext } from "../../utils/AppContext";
+import { useState, useEffect } from "react";
 
+import newRequest from "../../utils/newRequest";
+import { useAppContext } from "../../utils/AppContext";
+import { useDebounce } from "../../hooks/useDebounce";
 import SearchIcon from "../../assets/search.svg";
 import "./Home.css";
 
 const Home = () => {
   const { searchTerm, setSearchTerm, mode, setMode, isRandom, setIsRandom } =
     useAppContext();
+
+  const [suggestions, setSuggestions] = useState([]);
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+  useEffect(() => {
+    if (debouncedSearchTerm) {
+      const fetchSuggestions = async () => {
+        try {
+          const response = await newRequest.get("/allSuggestions", {
+            params: {
+              searchTerm: debouncedSearchTerm,
+            },
+          });
+          setSuggestions(response.data.suggestions);
+        } catch (error) {
+          console.error("Error fetching search suggestions:", error);
+        }
+      };
+
+      fetchSuggestions();
+    } else {
+      setSuggestions([]);
+    }
+  }, [debouncedSearchTerm]);
 
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
@@ -69,6 +96,15 @@ const Home = () => {
           </button>
         </div>
       </form>
+      {suggestions.length > 0 && (
+        <ul className="suggestions-list">
+          {suggestions.map((suggestion, index) => (
+            <li key={index} className="suggestion-item">
+              {suggestion}
+            </li>
+          ))}
+        </ul>
+      )}
     </main>
   );
 };
