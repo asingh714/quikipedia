@@ -25,12 +25,16 @@ app.get("/summarize", async (req, res) => {
   const { searchTerm, mode, isRandom } = req.query;
   let wikiResponse;
   try {
-    if (isRandom) {
+    if (isRandom === "true") {
+      console.log("random", isRandom);
+
       wikiResponse = await fetchRandomWikiPage();
     } else {
       const formattedSearchTerm = formatSearchTerm(searchTerm);
       wikiResponse = await fetchWikiExtract(formattedSearchTerm);
     }
+
+    console.log("response", wikiResponse);
 
     const { extract, imageUrl, isMissing } = wikiResponse;
     let messages = [];
@@ -82,7 +86,7 @@ app.get("/summarize", async (req, res) => {
 
 app.get("/allResults", async (req, res) => {
   const { searchTerm } = req.query;
-  console.log(searchTerm);
+
   try {
     const searchResults = await fetchWikiSearchResults(searchTerm);
     res.status(200).json({ searchResults });

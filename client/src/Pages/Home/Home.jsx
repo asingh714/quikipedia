@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import newRequest from "../../utils/newRequest";
 import { useAppContext } from "../../utils/AppContext";
@@ -9,7 +10,7 @@ import "./Home.css";
 const Home = () => {
   const { searchTerm, setSearchTerm, mode, setMode, isRandom, setIsRandom } =
     useAppContext();
-
+  const navigate = useNavigate();
   const [suggestions, setSuggestions] = useState([]);
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
@@ -45,12 +46,14 @@ const Home = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     setIsRandom(false);
-    console.log(`Searching for: ${searchTerm} in ${mode} mode.`);
+    navigate("/search");
   };
 
   const handleRandomSearch = (e) => {
     e.preventDefault();
     setIsRandom(true);
+    setSearchTerm("");
+    navigate("/search");
     console.log(
       `Fetching something random in ${mode} mode. And isRandom is setTo ${isRandom}`
     );
