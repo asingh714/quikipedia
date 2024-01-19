@@ -9,19 +9,19 @@ import { useAppContext } from "../../utils/AppContext";
 
 const SearchBar = () => {
   const {
-    searchTerm,
     setSearchTerm,
     mode,
     setMode,
     setIsRandom,
     suggestions,
     setSuggestions,
+    inputValue,
+    setInputValue,
   } = useAppContext();
-  const [inputValue, setInputValue] = useState(searchTerm);
   const [isInputFocused, setIsInputFocused] = useState(false);
   const suggestionsRef = useRef(null);
   const navigate = useNavigate();
-
+  const [focusedSuggestionIndex, setFocusedSuggestionIndex] = useState(-1);
   const debouncedSearchTerm = useDebounce(inputValue, 500);
 
   useEffect(() => {
@@ -62,6 +62,10 @@ const SearchBar = () => {
     };
   }, [setSuggestions]);
 
+  useEffect(() => {
+    setFocusedSuggestionIndex(-1);
+  }, [suggestions]);
+
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
@@ -74,20 +78,26 @@ const SearchBar = () => {
     setSearchTerm(inputValue);
     setIsRandom(false);
     setSuggestions([]);
-
     navigate("/search");
   };
   const handleInputFocus = () => {
     setIsInputFocused(true);
   };
 
-  const handleInputBlur = () => {
-    setIsInputFocused(false);
-  };
+  // const handleInputBlur = () => {
+  //   setIsInputFocused(false);
+  // };
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       handleSubmitSearch();
+    } else if (e.key === "Tab" && suggestions.length > 0) {
+      e.preventDefault();
+      const nextIndex = (focusedSuggestionIndex + 1) % suggestions.length;
+      setFocusedSuggestionIndex(nextIndex);
+      setInputValue(suggestions[nextIndex]);
+    } else if (e.key === "Escape") {
+      setSuggestions([]);
     }
   };
 
@@ -95,8 +105,8 @@ const SearchBar = () => {
     setIsRandom(false);
     setInputValue(suggestion);
     setSearchTerm(suggestion);
-    setSuggestions([]);
     navigate("/search");
+    setSuggestions([]);
   };
 
   return (
@@ -107,7 +117,7 @@ const SearchBar = () => {
         value={inputValue}
         onChange={handleInputChange}
         onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
+        // onBlur={handleInputBlur}
         onKeyDown={handleKeyPress}
       />
       {suggestions.length > 0 && (
@@ -115,7 +125,11 @@ const SearchBar = () => {
           {suggestions.map((suggestion, index) => (
             <li
               key={index}
-              className="suggestion-item"
+              className={`suggestion-item ${
+                index === focusedSuggestionIndex
+                  ? "suggestion-item-focused"
+                  : ""
+              }`}
               onClick={() => handleSelectedSearch(suggestion)}
             >
               {suggestion}

@@ -10,6 +10,7 @@ export const AppProvider = ({ children }) => {
   const [mode, setMode] = useState("normal");
   const [isRandom, setIsRandom] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
+  const [inputValue, setInputValue] = useState(searchTerm);
 
   return (
     <AppContext.Provider
@@ -22,6 +23,8 @@ export const AppProvider = ({ children }) => {
         setIsRandom,
         suggestions,
         setSuggestions,
+        inputValue,
+        setInputValue,
       }}
     >
       {children}

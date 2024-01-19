@@ -26,6 +26,9 @@
   padding: 10px 20px;
   cursor: pointer;
 }
+.suggestion-item-focused {
+  background-color: #dfe1e5;
+}
 
 .suggestion-item:not(:last-child) {
   border-bottom: 1px solid #dfe1e5;

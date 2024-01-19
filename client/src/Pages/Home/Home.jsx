@@ -5,12 +5,14 @@ import { useAppContext } from "../../utils/AppContext";
 import "./Home.css";
 
 const Home = () => {
-  const { setSearchTerm, setIsRandom } = useAppContext();
+  const { setSearchTerm, setIsRandom, inputValue } = useAppContext();
   const navigate = useNavigate();
 
   const handleSearch = (e) => {
+    console.log(inputValue);
     e.preventDefault();
     setIsRandom(false);
+    setSearchTerm(inputValue);
     navigate("/search");
   };
 

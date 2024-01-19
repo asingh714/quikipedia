@@ -1,4 +1,26 @@
 .search-page-container {
   display: flex;
   flex-direction: column;
+  border: 1px solid blue;
+  min-height: 100vh;
+}
+
+.nav-container {
+  display: flex;
+  border-bottom: 1px solid #dfe1e5;
+  padding: 1.5rem 2rem;
+}
+
+img {
+  height: 7.5rem;
+  width: 7.5rem;
+}
+
+.search-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid red;
+  height: 100%;
 }
