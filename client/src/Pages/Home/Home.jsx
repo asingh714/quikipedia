@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 import newRequest from "../../utils/newRequest";
@@ -13,6 +13,7 @@ const Home = () => {
   const navigate = useNavigate();
   const [suggestions, setSuggestions] = useState([]);
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
+  const suggestionsRef = useRef(null);
 
   useEffect(() => {
     if (debouncedSearchTerm) {
@@ -35,6 +36,23 @@ const Home = () => {
     }
   }, [debouncedSearchTerm]);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        suggestionsRef.current &&
+        !suggestionsRef.current.contains(event.target)
+      ) {
+        setSuggestions([]);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -46,6 +64,12 @@ const Home = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     setIsRandom(false);
+    navigate("/search");
+  };
+
+  const handleSelectedSearch = (suggestion) => {
+    setIsRandom(false);
+    setSearchTerm(suggestion);
     navigate("/search");
   };
 
@@ -79,12 +103,12 @@ const Home = () => {
             onChange={handleInputChange}
           />
           {suggestions.length > 0 && (
-            <ul className="suggestions-list">
+            <ul className="suggestions-list" ref={suggestionsRef}>
               {suggestions.map((suggestion, index) => (
                 <li
                   key={index}
                   className="suggestion-item"
-                  // onClick={() => selectSuggestion(suggestion)}
+                  onClick={() => handleSelectedSearch(suggestion)}
                 >
                   {suggestion}
                 </li>
