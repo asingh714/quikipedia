@@ -29,15 +29,13 @@ export default App;
 
 /* 
 TODO: 
-- Figure out simple solution to state. 
 
 Home Page: 
 - click list item and goes to search page 
 - type into search and goes to search page 
 - type into random and goes to search page 
-- need buttons on suggestions list 
 
 Search page: 
 - Full design  
-
+- Search Bar Component 
 */
