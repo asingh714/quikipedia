@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
 import { useAppContext } from "../../utils/AppContext";
 import "./Search.css";
+import SearchBar from "../../Components/SearchBar/SearchBar";
 
 const Search = () => {
   const { searchTerm, mode, isRandom } = useAppContext();
@@ -27,9 +28,12 @@ const Search = () => {
   }
 
   return (
-    <div className="search-result">
-      {data?.data?.summary && <p>{data.data.summary}</p>}
-      {data?.data?.imageUrl && <img src={data.data.imageUrl} alt="Summary" />}
+    <div className="search-page-container">
+      <SearchBar />
+      <div className="search-result">
+        {data?.data?.summary && <p>{data.data.summary}</p>}
+        {data?.data?.imageUrl && <img src={data.data.imageUrl} alt="Summary" />}
+      </div>
     </div>
   );
 };

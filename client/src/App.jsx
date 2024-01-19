@@ -38,4 +38,9 @@ Home Page:
 Search page: 
 - Full design  
 - Search Bar Component 
+
+MISC: 
+- Loaders 
+- Responsive 
+- Compliant 
 */
