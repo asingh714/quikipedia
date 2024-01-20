@@ -124,7 +124,6 @@ input:checked + .slider:before {
 @media only screen and (max-width: 750px) {
   .search-container {
     width: 55rem;
-    border: 1px solid red;
   }
 
   .main-input {
