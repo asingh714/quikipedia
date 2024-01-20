@@ -42,5 +42,5 @@ Search page:
 MISC: 
 - Loaders 
 - Responsive 
-- Compliant 
+- Compliance 
 */

@@ -6,6 +6,7 @@
   align-items: center;
   padding-top: 10%;
   position: relative;
+  border: 1px solid blue;
 }
 
 .bg-container {
@@ -161,5 +162,30 @@ form {
   }
   75% {
     transform: translate(-10vw, 10vh) scale(0.95);
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  h1 {
+    font-size: 5.6rem;
+  }
+  p {
+    font-size: 2rem;
+  }
+
+  .bg-shape1,
+  .bg-shape2,
+  .bg-shape3 {
+    width: 25rem;
+    height: 25rem;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  h1 {
+    font-size: 5.6rem;
+  }
+  p {
+    font-size: 2rem;
   }
 }

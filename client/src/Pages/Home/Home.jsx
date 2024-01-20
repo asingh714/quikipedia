@@ -9,7 +9,6 @@ const Home = () => {
   const navigate = useNavigate();
 
   const handleSearch = (e) => {
-    console.log(inputValue);
     e.preventDefault();
     setIsRandom(false);
     setSearchTerm(inputValue);

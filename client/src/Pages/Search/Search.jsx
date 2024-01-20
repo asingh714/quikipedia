@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 
 import newRequest from "../../utils/newRequest";
 import { useAppContext } from "../../utils/AppContext";
@@ -30,18 +31,20 @@ const Search = () => {
 
   if (isError) {
     console.error("Error fetching data:", error);
-    return <div className="search-page-container">Error: {error.message}</div>;
+    return <div className="loading-page-container">Error: {error.message}</div>;
   }
 
   return (
     <div className="search-page-container">
       <nav className="nav-container">
-        <img src={SearchIcon} alt="" />
+        <Link to="/">
+          <img src={SearchIcon} alt="" />
+        </Link>
         <SearchBar />
       </nav>
       <div className="search-result">
         {data?.data?.imageUrl && <img src={data.data.imageUrl} alt="Summary" />}
-        {data?.data?.summary && <p>{data.data.summary}</p>}
+        {data?.data?.summary && <p className>{data.data.summary}</p>}
       </div>
     </div>
   );

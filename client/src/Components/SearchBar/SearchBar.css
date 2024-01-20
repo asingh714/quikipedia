@@ -26,6 +26,7 @@
   padding: 10px 20px;
   cursor: pointer;
 }
+
 .suggestion-item-focused {
   background-color: #dfe1e5;
 }
@@ -118,4 +119,24 @@ input:checked + .slider:before {
 .fun-mode-label {
   font-size: 1.4rem;
   margin-left: 1rem;
+}
+
+@media only screen and (max-width: 750px) {
+  .search-container {
+    width: 55rem;
+    border: 1px solid red;
+  }
+
+  .main-input {
+    width: 70%;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .search-container {
+    width: 100%;
+  }
+  .main-input {
+    width: 60%;
+  }
 }
