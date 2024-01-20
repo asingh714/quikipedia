@@ -4,6 +4,7 @@ import newRequest from "../../utils/newRequest";
 import { useAppContext } from "../../utils/AppContext";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import SearchIcon from "../../assets/question.svg";
+import Spinner from "../../Components/Spinner/Spinner";
 import "./Search.css";
 
 const Search = () => {
@@ -20,12 +21,16 @@ const Search = () => {
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="loading-page-container">
+        <Spinner />
+      </div>
+    );
   }
 
   if (isError) {
     console.error("Error fetching data:", error);
-    return <div>Error: {error.message}</div>;
+    return <div className="search-page-container">Error: {error.message}</div>;
   }
 
   return (
