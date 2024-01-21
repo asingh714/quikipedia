@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -7,7 +8,7 @@ import SearchIcon from "../../assets/search.svg";
 import newRequest from "../../utils/newRequest";
 import { useAppContext } from "../../utils/AppContext";
 
-const SearchBar = () => {
+const SearchBar = ({ handleSearch }) => {
   const {
     setSearchTerm,
     mode,
@@ -74,12 +75,13 @@ const SearchBar = () => {
     setMode((prevMode) => (prevMode === "normal" ? "fun" : "normal"));
   };
 
-  const handleSubmitSearch = () => {
-    setSearchTerm(inputValue);
-    setIsRandom(false);
-    setSuggestions([]);
-    navigate("/search");
-  };
+  // const handleSubmitSearch = () => {
+  //   setSearchTerm(inputValue);
+  //   setIsRandom(false);
+  //   setSuggestions([]);
+  //   navigate("/search");
+  // };
+
   const handleInputFocus = () => {
     setIsInputFocused(true);
   };
@@ -90,7 +92,7 @@ const SearchBar = () => {
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
-      handleSubmitSearch();
+      handleSearch();
     } else if (e.key === "Tab" && suggestions.length > 0) {
       e.preventDefault();
       const nextIndex = (focusedSuggestionIndex + 1) % suggestions.length;
@@ -147,4 +149,7 @@ const SearchBar = () => {
   );
 };
 
+SearchBar.propTypes = {
+  handleSearch: PropTypes.func.isRequired,
+};
 export default SearchBar;

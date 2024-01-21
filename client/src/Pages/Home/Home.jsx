@@ -33,8 +33,8 @@ const Home = () => {
         <h1>Quikipedia</h1>
         <p>Quick AI-Generated Wikipedia summaries</p>
       </header>
-      <form>
-        <SearchBar />
+      <form onSubmit={handleSearch}>
+        <SearchBar handleSearch={handleSearch} />
         <div className="button-container">
           <button className="search-btn" onClick={handleSearch}>
             Search
