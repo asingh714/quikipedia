@@ -75,24 +75,14 @@ const SearchBar = ({ handleSearch }) => {
     setMode((prevMode) => (prevMode === "normal" ? "fun" : "normal"));
   };
 
-  // const handleSubmitSearch = () => {
-  //   setSearchTerm(inputValue);
-  //   setIsRandom(false);
-  //   setSuggestions([]);
-  //   navigate("/search");
-  // };
-
   const handleInputFocus = () => {
     setIsInputFocused(true);
   };
 
-  // const handleInputBlur = () => {
-  //   setIsInputFocused(false);
-  // };
-
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
-      handleSearch();
+      e.preventDefault();
+      handleSearch(e);
     } else if (e.key === "Tab" && suggestions.length > 0) {
       e.preventDefault();
       const nextIndex = (focusedSuggestionIndex + 1) % suggestions.length;
@@ -119,7 +109,6 @@ const SearchBar = ({ handleSearch }) => {
         value={inputValue}
         onChange={handleInputChange}
         onFocus={handleInputFocus}
-        // onBlur={handleInputBlur}
         onKeyDown={handleKeyPress}
       />
       {suggestions.length > 0 && (
@@ -150,6 +139,6 @@ const SearchBar = ({ handleSearch }) => {
 };
 
 SearchBar.propTypes = {
-  handleSearch: PropTypes.func.isRequired,
+  handleSearch: PropTypes.func,
 };
 export default SearchBar;

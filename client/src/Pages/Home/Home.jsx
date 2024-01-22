@@ -9,7 +9,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   const handleSearch = (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
     setIsRandom(false);
     setSearchTerm(inputValue);
     navigate("/search");

@@ -26,15 +26,11 @@ app.get("/summarize", async (req, res) => {
   let wikiResponse;
   try {
     if (isRandom === "true") {
-      console.log("random", isRandom);
-
       wikiResponse = await fetchRandomWikiPage();
     } else {
       const formattedSearchTerm = formatSearchTerm(searchTerm);
       wikiResponse = await fetchWikiExtract(formattedSearchTerm);
     }
-
-    console.log("response", wikiResponse);
 
     const { extract, imageUrl, isMissing } = wikiResponse;
     let messages = [];
@@ -43,7 +39,7 @@ app.get("/summarize", async (req, res) => {
       const researchPrompt =
         mode === "fun"
           ? ` Alright, let's make learning fun! Can you summarize the following text in a way that's easy-going, a bit silly, and still informative? Keep it under 350 characters and feel free to add a dash of humor or some quirky facts you might know!  Can you humorously research and provide a fun summary about "${searchTerm}"? Keep it short and snazzy, under 350 characters please! 🌟`
-          : `It seems there isn't a Wikipedia page on this topic. Can you research and provide a summary about "${searchTerm}" in a way that's easy-going, a bit silly, and still informative? Keep it under 350 characters.`;
+          : `It seems there isn't a Wikipedia page on this topic. Can you research and provide a summary about "${searchTerm}" in a way that is informative and concise? Keep it under 350 characters.`;
 
       messages = [{ role: "system", content: researchPrompt }];
     } else if (mode === "fun") {

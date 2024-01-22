@@ -10,7 +10,6 @@ import "./Search.css";
 
 const Search = () => {
   const { searchTerm, mode, isRandom } = useAppContext();
-  console.log("searchTerm", searchTerm);
   const { data, isError, error, isLoading } = useQuery({
     queryKey: ["summary", searchTerm, mode, isRandom],
     queryFn: () =>
@@ -44,7 +43,7 @@ const Search = () => {
       </nav>
       <div className="search-result">
         {data?.data?.imageUrl && <img src={data.data.imageUrl} alt="Summary" />}
-        {data?.data?.summary && <p className>{data.data.summary}</p>}
+        {data?.data?.summary && <p>{data.data.summary}</p>}
       </div>
     </div>
   );
