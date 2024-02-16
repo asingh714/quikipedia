@@ -8,7 +8,6 @@ export const useAppContext = () => useContext(AppContext);
 export const AppProvider = ({ children }) => {
   const [mode, setMode] = useState("normal");
   const [isRandom, setIsRandom] = useState(false);
-
   const [searchTerm, setSearchTerm] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [inputValue, setInputValue] = useState(searchTerm);

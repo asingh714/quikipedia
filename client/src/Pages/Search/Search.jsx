@@ -41,7 +41,7 @@ const Search = () => {
         </Link>
         <SearchBar />
       </nav>
-      <div className="search-result">
+      <div className="search-result-container">
         {data?.data?.imageUrl && <img src={data.data.imageUrl} alt="Summary" />}
         {data?.data?.summary && <p>{data.data.summary}</p>}
       </div>
