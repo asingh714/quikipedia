@@ -44,7 +44,6 @@ const fetchWikiExtract = async (searchTerm) => {
 
 const fetchRandomWikiPage = async () => {
   try {
-    // Fetch a random page
     const randomPageResponse = await fetch(
       "https://en.wikipedia.org/w/api.php?action=query&format=json&list=random&rnnamespace=0&rnlimit=1&origin=*"
     );
