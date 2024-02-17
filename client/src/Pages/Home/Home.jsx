@@ -1,26 +1,9 @@
-import { useNavigate } from "react-router-dom";
-
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import { useAppContext } from "../../utils/AppContext";
 import "./Home.css";
 
 const Home = () => {
-  const { setSearchTerm, setIsRandom, inputValue } = useAppContext();
-  const navigate = useNavigate();
-
-  const handleSearch = (e) => {
-    if (e) e.preventDefault();
-    setIsRandom(false);
-    setSearchTerm(inputValue);
-    navigate("/search");
-  };
-
-  const handleRandomSearch = (e) => {
-    e.preventDefault();
-    setIsRandom(true);
-    setSearchTerm("");
-    navigate("/search");
-  };
+  const { handleSearch, handleRandomSearch } = useAppContext();
 
   return (
     <main className="main-container">
@@ -34,7 +17,7 @@ const Home = () => {
         <p>Quick AI-Generated Wikipedia summaries</p>
       </header>
       <form onSubmit={handleSearch}>
-        <SearchBar handleSearch={handleSearch} />
+        <SearchBar />
         <div className="button-container">
           <button className="search-btn" onClick={handleSearch}>
             Search

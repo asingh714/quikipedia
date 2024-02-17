@@ -8,7 +8,7 @@ import SearchIcon from "../../assets/search.svg";
 import newRequest from "../../utils/newRequest";
 import { useAppContext } from "../../utils/AppContext";
 
-const SearchBar = ({ handleSearch }) => {
+const SearchBar = () => {
   const {
     setSearchTerm,
     mode,
@@ -18,6 +18,7 @@ const SearchBar = ({ handleSearch }) => {
     setSuggestions,
     inputValue,
     setInputValue,
+    handleSearch,
   } = useAppContext();
   const [isInputFocused, setIsInputFocused] = useState(false);
   const suggestionsRef = useRef(null);

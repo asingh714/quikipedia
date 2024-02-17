@@ -1,17 +1,27 @@
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { AppProvider } from "./utils/AppContext.jsx";
+
 import Home from "./Pages/Home/Home";
 import Search from "./Pages/Search/Search";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: (
+      <AppProvider>
+        <Home />
+      </AppProvider>
+    ),
   },
   {
     path: "/search",
-    element: <Search />,
+    element: (
+      <AppProvider>
+        <Search />
+      </AppProvider>
+    ),
   },
 ]);
 
@@ -26,21 +36,3 @@ function App() {
 }
 
 export default App;
-
-/* 
-TODO: 
-
-Home Page: 
-- click list item and goes to search page 
-- type into search and goes to search page 
-- type into random and goes to search page 
-
-Search page: 
-- Full design  
-- Search Bar Component 
-
-MISC: 
-- Loaders 
-- Responsive 
-- Compliance 
-*/

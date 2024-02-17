@@ -37,7 +37,7 @@
 }
 
 .search-result-container img {
-  max-width: 50rem;
+  max-width: 30rem;
   max-height: 25rem;
   object-fit: cover;
   border-radius: 0.8rem;

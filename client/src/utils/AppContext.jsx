@@ -1,4 +1,5 @@
 import { createContext, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const AppContext = createContext();
@@ -11,6 +12,21 @@ export const AppProvider = ({ children }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [inputValue, setInputValue] = useState(searchTerm);
+  const navigate = useNavigate();
+
+  const handleSearch = (e) => {
+    if (e) e.preventDefault();
+    setIsRandom(false);
+    setSearchTerm(inputValue);
+    navigate("/search");
+  };
+
+  const handleRandomSearch = (e) => {
+    e.preventDefault();
+    setIsRandom(true);
+    setSearchTerm("");
+    navigate("/search");
+  };
 
   return (
     <AppContext.Provider
@@ -25,6 +41,8 @@ export const AppProvider = ({ children }) => {
         setSuggestions,
         inputValue,
         setInputValue,
+        handleSearch,
+        handleRandomSearch,
       }}
     >
       {children}
