@@ -4,7 +4,6 @@
   align-items: center;
   width: 70rem;
   margin: 0 auto;
-  margin-top: 2rem;
 }
 
 .suggestions-list {
@@ -48,7 +47,7 @@
   outline: none;
   -webkit-appearance: none;
   transition: box-shadow 0.3s ease;
-  margin-right: auto;
+  margin-right: 2rem;
 }
 
 .main-input:hover,
@@ -138,4 +137,6 @@ input:checked + .slider:before {
   .main-input {
     width: 60%;
   }
+
+
 }
