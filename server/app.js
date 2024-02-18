@@ -13,28 +13,28 @@ import {
 } from "./utils.js";
 
 const app = express();
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+// app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 // app.use(
 //   cors({ origin: "https://quikipedia-client.onrender.com", credentials: true })
 // );
-// app.use(
-//   cors((req, callback) => {
-//     const allowedOrigins = [
-//       "https://quikipedia-client.onrender.com",
-//       "https://quikipedia-client.onrender.com/",
-//       "https://quikipedia.com",
-//       "https://quikipedia.com/",
-//     ];
-//     const origin = req.header("Origin");
-//     let corsOptions;
-//     if (allowedOrigins.includes(origin)) {
-//       corsOptions = { origin: true, credentials: true };
-//     } else {
-//       corsOptions = { origin: false };
-//     }
-//     callback(null, corsOptions);
-//   })
-// );
+app.use(
+  cors((req, callback) => {
+    const allowedOrigins = [
+      "https://quikipedia-client.onrender.com",
+      "https://quikipedia-client.onrender.com/",
+      "https://quikipedia.com",
+      "https://quikipedia.com/",
+    ];
+    const origin = req.header("Origin");
+    let corsOptions;
+    if (allowedOrigins.includes(origin)) {
+      corsOptions = { origin: true, credentials: true };
+    } else {
+      corsOptions = { origin: false };
+    }
+    callback(null, corsOptions);
+  })
+);
 
 app.use(morgan("tiny"));
 app.use(express.json());
