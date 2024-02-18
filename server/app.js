@@ -22,6 +22,8 @@ app.use(
     const allowedOrigins = [
       "https://quikipedia-client.onrender.com",
       "https://quikipedia-client.onrender.com/",
+      "https://www.quikipedia.com",
+      "https://www.quikipedia.com/",
       "https://quikipedia.com",
       "https://quikipedia.com/",
     ];
