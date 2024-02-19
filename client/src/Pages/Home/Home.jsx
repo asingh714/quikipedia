@@ -1,9 +1,24 @@
+import { useNavigate } from "react-router-dom";
+
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import { useAppContext } from "../../utils/AppContext";
 import "./Home.css";
 
 const Home = () => {
   const { handleSearch, handleRandomSearch } = useAppContext();
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleSearch();
+    navigate("/search");
+  };
+
+  const handleRandomSubmit = (e) => {
+    e.preventDefault();
+    handleRandomSearch();
+    navigate("/search");
+  };
 
   return (
     <main className="main-container">
@@ -16,13 +31,13 @@ const Home = () => {
         <h1>Quikipedia</h1>
         <p>Quick AI-Generated Wikipedia summaries</p>
       </header>
-      <form onSubmit={handleSearch}>
+      <form onSubmit={handleSubmit}>
         <SearchBar />
         <div className="button-container">
-          <button className="search-btn" onClick={handleSearch}>
+          <button className="search-btn" onClick={handleSubmit}>
             Search
           </button>
-          <button className="random-btn" onClick={handleRandomSearch}>
+          <button className="random-btn" onClick={handleRandomSubmit}>
             Something random 🤪
           </button>
         </div>

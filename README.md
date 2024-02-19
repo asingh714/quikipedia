@@ -1,6 +1,11 @@
 # Quikipedia
 
 
+[![Home Page] (/Users/amansingh/Desktop/Quikipedia_1.png)](https://www.quikipedia.com/)
+
+[![Search Page] (/Users/amansingh/Desktop/Quikipedia_2.png)](https://www.quikipedia.com/) 
+
+
 ## Introduction
 
 Quikipedia is a concise information platform inspired by the extensive knowledge repository of Wikipedia. Designed to provide quick, short summaries on a wide array of topics, Quikipedia offers an efficient way to gain insight without the need to navigate through detailed articles. Our service is especially useful for users looking for quick facts or an overview of a subject matter.

@@ -9,19 +9,11 @@ import Search from "./Pages/Search/Search";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <AppProvider>
-        <Home />
-      </AppProvider>
-    ),
+    element: <Home />,
   },
   {
     path: "/search",
-    element: (
-      <AppProvider>
-        <Search />
-      </AppProvider>
-    ),
+    element: <Search />,
   },
 ]);
 
@@ -30,7 +22,9 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <AppProvider>
+        <RouterProvider router={router} />
+      </AppProvider>
     </QueryClientProvider>
   );
 }

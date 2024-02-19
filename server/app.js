@@ -44,6 +44,8 @@ const openai = new OpenAI({
 
 app.get("/summarize", async (req, res) => {
   const { searchTerm, mode, isRandom } = req.query;
+  console.log(searchTerm, mode, isRandom);
+
   let wikiResponse;
   try {
     if (isRandom === "true") {

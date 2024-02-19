@@ -84,6 +84,7 @@ const SearchBar = () => {
     if (e.key === "Enter") {
       e.preventDefault();
       handleSearch(e);
+      navigate("/search");
     } else if (e.key === "Tab" && suggestions.length > 0) {
       e.preventDefault();
       const nextIndex = (focusedSuggestionIndex + 1) % suggestions.length;
