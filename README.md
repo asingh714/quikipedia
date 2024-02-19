@@ -1,9 +1,9 @@
 # Quikipedia
 
 
-[![Home Page] (/Users/amansingh/Desktop/Quikipedia_1.png)](https://www.quikipedia.com/)
+[![Home Page] (/client/src/assets/Quikipedia_1.png)](https://www.quikipedia.com/)
 
-[![Search Page] (/Users/amansingh/Desktop/Quikipedia_2.png)](https://www.quikipedia.com/) 
+[![Search Page] (/client/src/assets/Quikipedia_2.png)](https://www.quikipedia.com/) 
 
 
 ## Introduction
