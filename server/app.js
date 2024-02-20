@@ -13,7 +13,11 @@ import {
 } from "./utils.js";
 
 const app = express();
+
+// CORS configuration for Development
 // app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+
+// CORS configuration to enable cross-origin requests from specified origins
 app.use(
   cors((req, callback) => {
     const allowedOrigins = [
@@ -38,10 +42,12 @@ app.use(
 app.use(morgan("tiny"));
 app.use(express.json());
 
+// Initialize OpenAI with the API key
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+// Endpoint to summarize a given topic or fetch a random Wikipedia page
 app.get("/summarize", async (req, res) => {
   const { searchTerm, mode, isRandom } = req.query;
   console.log(searchTerm, mode, isRandom);
@@ -103,6 +109,7 @@ app.get("/summarize", async (req, res) => {
   }
 });
 
+// Endpoint to retrieve all search results for a given query from Wikipedia
 app.get("/allResults", async (req, res) => {
   const { searchTerm } = req.query;
 
@@ -114,6 +121,7 @@ app.get("/allResults", async (req, res) => {
   }
 });
 
+// Endpoint to fetch search suggestions based on user input
 app.get("/allSuggestions", async (req, res) => {
   res.set("Cache-Control", "no-store");
   const { searchTerm } = req.query;

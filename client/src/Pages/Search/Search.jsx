@@ -8,8 +8,11 @@ import SearchIcon from "../../assets/question.svg";
 import Spinner from "../../Components/Spinner/Spinner";
 import "./Search.css";
 
+// The Search component displays the results of a search query
 const Search = () => {
   const { searchTerm, mode, isRandom } = useAppContext();
+
+  // useQuery hook from react-query to fetch data when component mounts or updates
   const { data, isError, error, isLoading } = useQuery({
     queryKey: ["summary", searchTerm, mode, isRandom],
     queryFn: () =>

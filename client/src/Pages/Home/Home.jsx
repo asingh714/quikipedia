@@ -4,16 +4,20 @@ import SearchBar from "../../Components/SearchBar/SearchBar";
 import { useAppContext } from "../../utils/AppContext";
 import "./Home.css";
 
+// The Home component serves as the landing page for Quikipedia.
+// It displays the search bar and buttons to search or get a random article.
 const Home = () => {
   const { handleSearch, handleRandomSearch } = useAppContext();
   const navigate = useNavigate();
 
+  // handleSubmit is called when the user submits a search term.
   const handleSubmit = (e) => {
     e.preventDefault();
     handleSearch();
     navigate("/search");
   };
 
+  // handleRandomSubmit is called when the user wants a random article.
   const handleRandomSubmit = (e) => {
     e.preventDefault();
     handleRandomSearch();

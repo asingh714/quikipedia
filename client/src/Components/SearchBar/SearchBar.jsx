@@ -8,6 +8,7 @@ import SearchIcon from "../../assets/search.svg";
 import newRequest from "../../utils/newRequest";
 import { useAppContext } from "../../utils/AppContext";
 
+// The SearchBar component includes an input for searching and suggestions dropdown.
 const SearchBar = () => {
   const {
     setSearchTerm,

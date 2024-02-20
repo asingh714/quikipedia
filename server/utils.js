@@ -1,3 +1,4 @@
+// Function to fetch search results from Wikipedia based on a search term
 const fetchWikiSearchResults = async (searchTerm) => {
   try {
     const response = await fetch(
@@ -11,6 +12,7 @@ const fetchWikiSearchResults = async (searchTerm) => {
   }
 };
 
+// Function to fetch search suggestions from Wikipedia as the user types
 const fetchSuggestions = async (searchTerm) => {
   const url = `https://en.wikipedia.org/w/api.php?action=opensearch&search=${searchTerm}&limit=10&namespace=0&format=json&origin=*`;
 
@@ -23,6 +25,7 @@ const fetchSuggestions = async (searchTerm) => {
   }
 };
 
+// Function to fetch a page extract and image URL from Wikipedia
 const fetchWikiExtract = async (searchTerm) => {
   try {
     const response = await fetch(
@@ -42,6 +45,7 @@ const fetchWikiExtract = async (searchTerm) => {
   }
 };
 
+// Function to fetch a random Wikipedia page's extract and image URL
 const fetchRandomWikiPage = async () => {
   try {
     const randomPageResponse = await fetch(
@@ -72,6 +76,7 @@ const fetchRandomWikiPage = async () => {
   }
 };
 
+// Utility function to format search terms into Wikipedia page title format
 const formatSearchTerm = (searchTerm) => {
   return searchTerm
     .trim()
