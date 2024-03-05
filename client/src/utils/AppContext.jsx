@@ -21,8 +21,7 @@ export const AppProvider = ({ children }) => {
     setSearchTerm(inputValue);
   };
 
-  const handleRandomSearch = (e) => {
-    e.preventDefault();
+  const handleRandomSearch = () => {
     setIsRandom(true);
     setSearchTerm("");
   };

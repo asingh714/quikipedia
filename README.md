@@ -76,7 +76,8 @@ Quikipedia is built with a robust stack to ensure a seamless user experience:
 	npm install
 	```
 3. Start the server: ```npm run server```
-4. Run the client application: ```npm run dev```	
+4. Run the client application: ```npm run dev```
+5. You will need to provide your own keys 	
 
 ### Usage
 - **Home Page**: Features a search bar for entering topics and a button for fetching random summaries.
